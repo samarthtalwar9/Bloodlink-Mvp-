@@ -1,6 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
    BLOODLINK AI — script.js
-   All interactivity, data rendering & navigation
 ═══════════════════════════════════════════════════════════ */
 
 /* ── DATA ─────────────────────────────────────────────────── */
@@ -48,41 +47,63 @@ function priorityCls(p) {
   return "priority-medium";
 }
 
+/* ── MOBILE SIDEBAR ───────────────────────────────────────── */
+function openSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("sidebar-overlay");
+  sidebar.classList.remove("hidden");
+  sidebar.classList.add("mobile-open");
+  overlay.classList.add("visible");
+  document.body.style.overflow = "hidden";
+
+  // Animate all hamburgers to open state
+  document.querySelectorAll(".hamburger").forEach(h => h.classList.add("open"));
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("sidebar-overlay");
+  sidebar.classList.remove("mobile-open");
+  overlay.classList.remove("visible");
+  document.body.style.overflow = "";
+  document.querySelectorAll(".hamburger").forEach(h => h.classList.remove("open"));
+}
+
 /* ── NAVIGATION ───────────────────────────────────────────── */
 let currentPage = "landing";
 
 function navigate(page) {
-  // Hide all pages
   document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
-  // Show target
   const target = document.getElementById("page-" + page);
   if (target) {
     target.classList.remove("hidden");
     target.classList.remove("page-enter");
-    void target.offsetWidth; // force reflow
+    void target.offsetWidth;
     target.classList.add("page-enter");
   }
 
-  // Sidebar visibility
   const sidebar = document.getElementById("sidebar");
   if (page === "landing") {
     sidebar.classList.add("hidden");
   } else {
-    sidebar.classList.remove("hidden");
-    // Update active nav item
+    // On desktop always show; on mobile it's off-canvas
+    if (window.innerWidth > 1024) {
+      sidebar.classList.remove("hidden");
+    }
     document.querySelectorAll(".nav-item").forEach(btn => {
       btn.classList.toggle("active", btn.dataset.page === page);
     });
   }
 
-  // Background colour
+  // Close mobile sidebar on navigate
+  closeSidebar();
+
   document.getElementById("main-content").style.background =
     (page === "landing") ? "transparent" : "#F7F7F8";
 
   currentPage = page;
   window.scrollTo(0, 0);
 
-  // Page-specific init
   if (page === "dashboard")  initDashboard();
   if (page === "search")     initSearch();
   if (page === "emergency")  initEmergency();
@@ -95,14 +116,11 @@ function scrollToSection(id) {
   if (el) el.scrollIntoView({ behavior: "smooth" });
 }
 
-/* ══════════════════════════════════════════════════════════
-   PARTICLES (Landing Hero)
-══════════════════════════════════════════════════════════ */
+/* ── PARTICLES ────────────────────────────────────────────── */
 function initParticles() {
   const canvas = document.getElementById("particles-canvas");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  let raf;
 
   function resize() {
     canvas.width  = canvas.offsetWidth;
@@ -142,18 +160,15 @@ function initParticles() {
         ctx.stroke();
       }
     }));
-    raf = requestAnimationFrame(draw);
+    requestAnimationFrame(draw);
   }
   draw();
 }
 
-/* ══════════════════════════════════════════════════════════
-   DASHBOARD PAGE
-══════════════════════════════════════════════════════════ */
+/* ── DASHBOARD ────────────────────────────────────────────── */
 let dashSelectedGroup = null;
 
 function initDashboard() {
-  // Stats
   const totalU = BG.reduce((s, g) => s + BANKS.reduce((ss, b) => ss + b.stock[g], 0), 0);
   const critG  = BG.filter(g => BANKS.every(b => b.stock[g] === 0)).length;
   const activeR = EM_REQS.filter(r => r.status === "Active").length;
@@ -162,7 +177,6 @@ function initDashboard() {
   document.getElementById("dash-crit-groups").textContent = critG;
   document.getElementById("dash-active-reqs").textContent = activeR;
 
-  // Chips
   renderChips("dash-chips", dashSelectedGroup, g => {
     dashSelectedGroup = (dashSelectedGroup === g) ? null : g;
     filterDashboard();
@@ -187,15 +201,12 @@ function renderDashBanks(banks) {
   const grid = document.getElementById("dash-banks-grid");
   grid.innerHTML = "";
   banks.forEach((b, i) => {
-    const total = Object.values(b.stock).reduce((a, c) => a + c, 0);
     const s = statusOf(dashSelectedGroup ? b.stock[dashSelectedGroup] : 10);
     const stockEntries = Object.entries(b.stock).slice(0, 4);
-
     const card = document.createElement("div");
     card.className = "card bank-card fade-up";
     card.style.animationDelay = (0.2 + i * 0.06) + "s";
     card.onclick = () => navigate("search");
-
     card.innerHTML = `
       <div class="bank-card-header">
         <div>
@@ -208,10 +219,7 @@ function renderDashBanks(banks) {
         <span class="status-pill ${s.cls}">${s.label}</span>
       </div>
       <div class="bank-card-stock">
-        ${stockEntries.map(([g, u]) => {
-          const ss = statusOf(u);
-          return `<span class="stock-pill ${ss.cls}">${g}: ${u}</span>`;
-        }).join("")}
+        ${stockEntries.map(([g,u]) => `<span class="stock-pill ${statusOf(u).cls}">${g}: ${u}</span>`).join("")}
       </div>
       <div class="bank-card-footer">
         <div class="bank-card-meta">
@@ -231,16 +239,14 @@ function renderDashBanks(banks) {
   });
 }
 
-/* ══════════════════════════════════════════════════════════
-   SEARCH PAGE
-══════════════════════════════════════════════════════════ */
+/* ── SEARCH ───────────────────────────────────────────────── */
 let searchGroup = "O+";
 let selectedBank = null;
 let reservedBanks = new Set();
 
 function initSearch() {
   renderChips("search-chips", searchGroup, g => {
-    if (g) { searchGroup = g; }
+    if (g) searchGroup = g;
     renderSearchResults();
     renderMapPins();
     updateCompatBanner();
@@ -276,7 +282,6 @@ function renderSearchResults() {
     card.className = "search-result-card fade-up" + (isSel ? " selected" : "");
     card.style.animationDelay = i * 0.07 + "s";
     card.onclick = () => selectBank(b);
-
     card.innerHTML = `
       <div style="display:flex;justify-content:space-between;margin-bottom:8px">
         <div>
@@ -310,10 +315,8 @@ function renderSearchResults() {
 function reserveUnit(bankId) {
   const btn = document.getElementById("reserve-btn-" + bankId);
   if (!btn || reservedBanks.has(bankId)) return;
-
   btn.disabled = true;
   btn.innerHTML = `<span class="spin"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.58"/></svg></span> Reserving...`;
-
   setTimeout(() => {
     reservedBanks.add(bankId);
     renderSearchResults();
@@ -335,13 +338,11 @@ function showBankDetail(bank) {
   document.getElementById("detail-meta").textContent = `${bank.addr} · ${bank.dist} km away · ⭐ ${bank.rating}`;
   document.getElementById("detail-phone-link").href = "tel:" + bank.phone;
   document.getElementById("detail-phone-num").textContent = bank.phone;
-
   const stockDiv = document.getElementById("detail-stock");
-  stockDiv.innerHTML = Object.entries(bank.stock).map(([g, u]) => {
+  stockDiv.innerHTML = Object.entries(bank.stock).map(([g,u]) => {
     const s = statusOf(u);
     return `<span class="${s.cls}" style="padding:3px 10px;border-radius:7px;font-size:12px;font-weight:700">${g}: ${u}u</span>`;
   }).join("");
-
   detail.classList.remove("hidden");
 }
 
@@ -355,35 +356,25 @@ function closeBankDetail() {
 function renderMapPins() {
   const pinsDiv = document.getElementById("map-pins");
   pinsDiv.innerHTML = "";
-
   const lats = BANKS.map(b => b.lat);
   const lngs = BANKS.map(b => b.lng);
   const la0 = Math.min(...lats) - 0.01, la1 = Math.max(...lats) + 0.01;
   const ln0 = Math.min(...lngs) - 0.01, ln1 = Math.max(...lngs) + 0.01;
-
   const px = lng => ((lng - ln0) / (ln1 - ln0)) * 82 + 9;
   const py = lat => (1 - (lat - la0) / (la1 - la0)) * 78 + 11;
 
   BANKS.forEach(b => {
-    const u = COMPAT[searchGroup] ? b.stock[COMPAT[searchGroup].find(g => b.stock[g] >= 0) || searchGroup] || 0 : 10;
     const uForColor = b.stock[searchGroup] !== undefined ? b.stock[searchGroup] : 10;
     const isSel = selectedBank && selectedBank.id === b.id;
-
-    const col = isSel ? "#E53935"
-      : uForColor === 0 ? "#E53935"
-      : uForColor <= 5 ? "#E65100"
-      : "#2E7D32";
-
+    const col = isSel ? "#E53935" : uForColor === 0 ? "#E53935" : uForColor <= 5 ? "#E65100" : "#2E7D32";
     const bgCol = isSel ? "#E53935" : "white";
     const textCol = isSel ? "white" : col;
-
     const pin = document.createElement("div");
     pin.className = "map-pin";
     pin.style.left = px(b.lng) + "%";
     pin.style.top  = py(b.lat) + "%";
     if (isSel) pin.style.animation = "dotPulse 1.5s ease infinite";
     pin.style.zIndex = isSel ? "10" : "5";
-
     const shortName = b.name.split(" ").slice(0, 2).join(" ");
     pin.innerHTML = `
       <div class="map-pin-label" style="background:${bgCol};color:${textCol};border:2px solid ${col};box-shadow:${isSel ? "0 4px 16px rgba(229,57,53,0.5)" : "0 2px 10px rgba(0,0,0,0.14)"}">
@@ -395,9 +386,7 @@ function renderMapPins() {
   });
 }
 
-/* ══════════════════════════════════════════════════════════
-   EMERGENCY PAGE
-══════════════════════════════════════════════════════════ */
+/* ── EMERGENCY ────────────────────────────────────────────── */
 let emBloodGroup = null;
 let emUrgency = "Critical";
 
@@ -406,26 +395,18 @@ function initEmergency() {
   emUrgency = "Critical";
   document.getElementById("emergency-success").classList.add("hidden");
   document.getElementById("emergency-form-wrap").classList.remove("hidden");
-
-  // Reset form fields
   ["em-name","em-loc","em-contact"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = "";
   });
-
-  // Chips
   renderChips("em-chips", emBloodGroup, g => {
     emBloodGroup = (emBloodGroup === g) ? null : g;
     updateEmergencySubmitBtn();
     renderChips("em-chips", emBloodGroup, arguments.callee);
   }, "9px 16px", "11px", "700");
-
-  // Urgency buttons
   document.querySelectorAll(".urgency-btn").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.urgency === "Critical");
   });
-
-  // Recent requests
   renderRecentRequests();
   updateEmergencySubmitBtn();
 }
@@ -437,52 +418,32 @@ function setUrgency(btn) {
 }
 
 function updateEmergencySubmitBtn() {
-  const loc = document.getElementById("em-loc").value.trim();
+  const loc = document.getElementById("em-loc") ? document.getElementById("em-loc").value.trim() : "";
   const canSubmit = !!emBloodGroup && !!loc;
-  const btn = document.getElementById("em-submit-btn");
+  const btn  = document.getElementById("em-submit-btn");
   const hint = document.getElementById("em-hint");
-  btn.disabled = !canSubmit;
-  hint.style.display = canSubmit ? "none" : "block";
+  if (btn)  btn.disabled = !canSubmit;
+  if (hint) hint.style.display = canSubmit ? "none" : "block";
 }
-
-// Listen to location input changes
-document.addEventListener("DOMContentLoaded", () => {
-  const emLoc = document.getElementById("em-loc");
-  if (emLoc) emLoc.addEventListener("input", updateEmergencySubmitBtn);
-});
 
 function submitEmergency() {
   const loc = document.getElementById("em-loc").value.trim();
   if (!emBloodGroup || !loc) return;
-
   const btn = document.getElementById("em-submit-btn");
   btn.disabled = true;
   btn.innerHTML = `<span class="spin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.58"/></svg></span> Sending Alert...`;
-
-  // Save to localStorage
   try {
     const prev = JSON.parse(localStorage.getItem("bl_em") || "[]");
-    prev.unshift({
-      name: document.getElementById("em-name").value,
-      bloodGroup: emBloodGroup,
-      loc: loc,
-      contact: document.getElementById("em-contact").value,
-      urgency: emUrgency,
-      id: Date.now(),
-      ts: new Date().toISOString()
-    });
+    prev.unshift({ name:document.getElementById("em-name").value, bloodGroup:emBloodGroup, loc, contact:document.getElementById("em-contact").value, urgency:emUrgency, id:Date.now(), ts:new Date().toISOString() });
     localStorage.setItem("bl_em", JSON.stringify(prev));
   } catch(e) {}
-
   setTimeout(() => {
     document.getElementById("emergency-form-wrap").classList.add("hidden");
     document.getElementById("emergency-success").classList.remove("hidden");
   }, 2200);
 }
 
-function resetEmergency() {
-  initEmergency();
-}
+function resetEmergency() { initEmergency(); }
 
 function renderRecentRequests() {
   const container = document.getElementById("recent-requests");
@@ -511,9 +472,7 @@ function renderRecentRequests() {
   });
 }
 
-/* ══════════════════════════════════════════════════════════
-   DONATE PAGE
-══════════════════════════════════════════════════════════ */
+/* ── DONATE ───────────────────────────────────────────────── */
 let donorBloodGroup = null;
 let donorAvail = true;
 const donorId = "BL-" + (Math.floor(Math.random() * 9000) + 1000);
@@ -521,31 +480,25 @@ const donorId = "BL-" + (Math.floor(Math.random() * 9000) + 1000);
 function initDonate() {
   donorBloodGroup = null;
   donorAvail = true;
-
   document.getElementById("donate-success").classList.add("hidden");
   document.getElementById("donate-form-wrap").classList.remove("hidden");
-
   ["don-name","don-email","don-loc","don-last"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = "";
   });
-
   const toggle = document.getElementById("don-toggle");
   if (toggle) toggle.classList.add("active");
-
   renderChips("don-chips", donorBloodGroup, g => {
     donorBloodGroup = (donorBloodGroup === g) ? null : g;
     updateDonateBtn();
     renderChips("don-chips", donorBloodGroup, arguments.callee);
   }, "9px 15px", "14px", "700");
-
   updateDonateBtn();
 }
 
 function toggleAvail() {
   donorAvail = !donorAvail;
-  const toggle = document.getElementById("don-toggle");
-  toggle.classList.toggle("active", donorAvail);
+  document.getElementById("don-toggle").classList.toggle("active", donorAvail);
 }
 
 function updateDonateBtn() {
@@ -554,32 +507,21 @@ function updateDonateBtn() {
   if (!btn || !name) return;
   const canSubmit = name.value.trim() && donorBloodGroup;
   btn.disabled = !canSubmit;
-  btn.style.background = canSubmit
-    ? "linear-gradient(135deg,#E53935,#C62828)"
-    : "#F0F0F0";
-  btn.style.color   = canSubmit ? "white" : "#CCC";
-  btn.style.cursor  = canSubmit ? "pointer" : "not-allowed";
-  btn.style.boxShadow = canSubmit ? "0 4px 18px rgba(229,57,53,0.38)" : "none";
+  btn.style.background   = canSubmit ? "linear-gradient(135deg,#E53935,#C62828)" : "#F0F0F0";
+  btn.style.color        = canSubmit ? "white" : "#CCC";
+  btn.style.cursor       = canSubmit ? "pointer" : "not-allowed";
+  btn.style.boxShadow    = canSubmit ? "0 4px 18px rgba(229,57,53,0.38)" : "none";
 }
-
-// Listen to name input
-document.addEventListener("DOMContentLoaded", () => {
-  const donName = document.getElementById("don-name");
-  if (donName) donName.addEventListener("input", updateDonateBtn);
-});
 
 function submitDonate() {
   const name = document.getElementById("don-name").value.trim();
   if (!name || !donorBloodGroup) return;
-
   const loc = document.getElementById("don-loc").value.trim();
-
   try {
     const prev = JSON.parse(localStorage.getItem("bl_donors") || "[]");
-    prev.push({ name, bg: donorBloodGroup, loc, avail: donorAvail, id: Date.now() });
+    prev.push({ name, bg:donorBloodGroup, loc, avail:donorAvail, id:Date.now() });
     localStorage.setItem("bl_donors", JSON.stringify(prev));
   } catch(e) {}
-
   const bgStr = donorBloodGroup.replace("+","P").replace("-","N");
   document.getElementById("donor-id-display").textContent = `${donorId}-${bgStr}`;
   document.getElementById("donor-success-name").textContent = name;
@@ -587,27 +529,19 @@ function submitDonate() {
   document.getElementById("donor-avail-val").textContent    = donorAvail ? "Active" : "Inactive";
   document.getElementById("donor-bg-val").textContent       = donorBloodGroup;
   document.getElementById("donor-loc-val").textContent      = loc || "Not set";
-
   document.getElementById("donate-form-wrap").classList.add("hidden");
   document.getElementById("donate-success").classList.remove("hidden");
 }
 
-function resetDonate() {
-  initDonate();
-}
+function resetDonate() { initDonate(); }
 
-/* ══════════════════════════════════════════════════════════
-   ADMIN PAGE
-══════════════════════════════════════════════════════════ */
+/* ── ADMIN ────────────────────────────────────────────────── */
 function initAdmin() {
-  // Compute totals
   const totalU = BG.reduce((s, g) => s + BANKS.reduce((ss, b) => ss + b.stock[g], 0), 0);
   const activeAlerts = EM_REQS.filter(r => r.status === "Active").length;
-
   document.getElementById("admin-total").textContent  = totalU;
   document.getElementById("admin-alerts").textContent = activeAlerts;
   document.getElementById("admin-active-badge").textContent = activeAlerts + " active";
-
   renderAdminChart();
   renderAdminInventory();
   renderAdminRequests();
@@ -624,18 +558,12 @@ function switchAdminTab(btn) {
 function renderAdminChart() {
   const chart = document.getElementById("admin-chart");
   chart.innerHTML = "";
-
-  const totals = BG.map(g => ({
-    g, tot: BANKS.reduce((s, b) => s + b.stock[g], 0)
-  }));
+  const totals = BG.map(g => ({ g, tot: BANKS.reduce((s, b) => s + b.stock[g], 0) }));
   const maxU = Math.max(...totals.map(d => d.tot), 1);
-
   totals.forEach(({ g, tot }, i) => {
-    const h  = Math.max(8, (tot / maxU) * 130);
-    const s  = statusOf(tot > 0 ? Math.min(tot, 20) : 0);
-    const colMap = { "status-available": "#2E7D32", "status-low": "#E65100", "status-critical": "#E53935" };
-    const col = colMap[s.cls];
-
+    const h   = Math.max(8, (tot / maxU) * 130);
+    const s   = statusOf(tot > 0 ? Math.min(tot, 20) : 0);
+    const col = { "status-available":"#2E7D32", "status-low":"#E65100", "status-critical":"#E53935" }[s.cls];
     const wrap = document.createElement("div");
     wrap.className = "chart-bar-wrap";
     wrap.innerHTML = `
@@ -669,10 +597,7 @@ function renderAdminInventory() {
         </button>
       </div>
       <div class="inv-stock">
-        ${Object.entries(b.stock).map(([g, u]) => {
-          const s = statusOf(u);
-          return `<span class="inv-stock-pill ${s.cls}">${g} <span style="opacity:0.8">${u}u</span></span>`;
-        }).join("")}
+        ${Object.entries(b.stock).map(([g,u]) => `<span class="inv-stock-pill ${statusOf(u).cls}">${g} <span style="opacity:0.8">${u}u</span></span>`).join("")}
       </div>
     `;
     list.appendChild(row);
@@ -706,33 +631,24 @@ function renderAdminRequests() {
   });
 }
 
-/* ══════════════════════════════════════════════════════════
-   SHARED: renderChips
-   Renders blood group chip buttons into container by id
-══════════════════════════════════════════════════════════ */
+/* ── SHARED: renderChips ──────────────────────────────────── */
 function renderChips(containerId, selected, onSelect, padding, fontSize, fontWeight) {
   const container = document.getElementById(containerId);
   if (!container) return;
   container.innerHTML = "";
-  const p  = padding    || "7px 14px";
-  const fs = fontSize   || "13px";
-  const fw = fontWeight || "600";
-
   BG.forEach(g => {
     const btn = document.createElement("button");
     btn.className = "chip" + (selected === g ? " active" : "");
     btn.textContent = g;
-    btn.style.padding    = p;
-    btn.style.fontSize   = fs;
-    btn.style.fontWeight = fw;
+    if (padding)    btn.style.padding    = padding;
+    if (fontSize)   btn.style.fontSize   = fontSize;
+    if (fontWeight) btn.style.fontWeight = fontWeight;
     btn.onclick = () => onSelect(g);
     container.appendChild(btn);
   });
 }
 
-/* ══════════════════════════════════════════════════════════
-   TOAST NOTIFICATION
-══════════════════════════════════════════════════════════ */
+/* ── TOAST ────────────────────────────────────────────────── */
 let toastTimer = null;
 function showToast(msg) {
   const toast = document.getElementById("toast");
@@ -750,12 +666,34 @@ function callBank(phone) {
   window.location.href = "tel:" + phone;
 }
 
-/* ══════════════════════════════════════════════════════════
-   INIT
-══════════════════════════════════════════════════════════ */
+/* ── INIT ─────────────────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
-  // Show landing page
+  // Wire up sidebar overlay close
+  const overlay = document.getElementById("sidebar-overlay");
+  if (overlay) overlay.addEventListener("click", closeSidebar);
+
+  // Close sidebar on ESC
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeSidebar();
+  });
+
+  // On resize to desktop, ensure sidebar is visible on non-landing pages
+  window.addEventListener("resize", () => {
+    const sidebar = document.getElementById("sidebar");
+    if (window.innerWidth > 1024 && currentPage !== "landing") {
+      sidebar.classList.remove("hidden");
+      closeSidebar();
+    }
+  });
+
+  // Wire location input for emergency
+  const emLoc = document.getElementById("em-loc");
+  if (emLoc) emLoc.addEventListener("input", updateEmergencySubmitBtn);
+
+  // Wire name input for donate
+  const donName = document.getElementById("don-name");
+  if (donName) donName.addEventListener("input", updateDonateBtn);
+
   navigate("landing");
-  // Start particles
   initParticles();
 });

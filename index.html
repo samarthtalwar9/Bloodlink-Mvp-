@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BloodLink  — Every Drop Saves a Life</title>
+  <title>BloodLink — Every Drop Saves a Life</title>
   <link rel="stylesheet" href="style.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -11,14 +11,12 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════
-     APP WRAPPER
-═══════════════════════════════════════════════ -->
 <div id="app">
 
-  <!-- ──────────────────────────────────────────
-       SIDEBAR (hidden on landing)
-  ─────────────────────────────────────────── -->
+  <!-- SIDEBAR OVERLAY (mobile) -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- ── SIDEBAR ── -->
   <aside id="sidebar" class="sidebar hidden">
     <div class="sidebar-brand" onclick="navigate('landing')">
       <div class="brand-icon">
@@ -71,26 +69,31 @@
     </div>
   </aside>
 
-  <!-- ──────────────────────────────────────────
-       MAIN CONTENT
-  ─────────────────────────────────────────── -->
+  <!-- ── MAIN CONTENT ── -->
   <main id="main-content">
 
-    <!-- ════════════════════════════
-         PAGE: LANDING
-    ════════════════════════════ -->
+    <!-- ════ PAGE: LANDING ════ -->
     <div id="page-landing" class="page">
-      <!-- NAVBAR -->
+
+      <!-- Mobile topbar (landing) -->
+      <div class="mobile-topbar-landing glass">
+        <div class="landing-brand">
+          <svg width="24" height="30" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#E53935"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg>
+          <span class="syne landing-brand-name">BloodLink</span>
+        </div>
+        <button class="btn-red mobile-open-btn" onclick="navigate('dashboard')">Open App</button>
+      </div>
+
       <nav class="landing-nav glass">
         <div class="landing-brand">
           <svg width="30" height="37" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#E53935"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg>
-          <span class="syne landing-brand-name">BloodLink </span>
+          <span class="syne landing-brand-name">BloodLink</span>
         </div>
         <div class="landing-nav-links">
           <button class="nav-link" onclick="scrollToSection('features')">Features</button>
           <button class="nav-link" onclick="scrollToSection('about')">About</button>
           <button class="nav-link" onclick="scrollToSection('contact')">Contact</button>
-          <button class="btn-red" onclick="navigate('dashboard')" style="padding:10px 22px;border-radius:11px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;">
+          <button class="btn-red landing-open-btn" onclick="navigate('dashboard')">
             Open App
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
           </button>
@@ -105,20 +108,16 @@
             <span class="dot dot-red"></span>
             Now live across 120+ cities in India
           </div>
-
           <div class="hero-drop fade-up-1">
-            <svg class="floating" width="88" height="108" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#E53935"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg>
+            <svg class="floating hero-drop-svg" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#E53935"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg>
           </div>
-
           <h1 class="syne hero-headline fade-up-2">
             Every Drop<br/>
             <span class="gradient-text">Saves a Life.</span>
           </h1>
-
           <p class="hero-sub fade-up-3">
             AI-powered blood matching that connects critical patients with donors in real-time. When seconds matter, we deliver.
           </p>
-
           <div class="hero-ctas fade-up-4">
             <button class="btn-red hero-cta-primary" onclick="navigate('search')">
               Find Blood Now
@@ -130,33 +129,18 @@
             </button>
           </div>
         </div>
-
         <div class="scroll-indicator">
-          <div class="scroll-mouse">
-            <div class="scroll-dot"></div>
-          </div>
+          <div class="scroll-mouse"><div class="scroll-dot"></div></div>
         </div>
       </section>
 
       <!-- STATS -->
       <section class="stats-section" id="about">
         <div class="stats-grid">
-          <div class="stat-item fade-up" style="animation-delay:.0s">
-            <div class="syne stat-value">2,400+</div>
-            <div class="stat-label">Blood Banks</div>
-          </div>
-          <div class="stat-item fade-up" style="animation-delay:.1s">
-            <div class="syne stat-value">50K+</div>
-            <div class="stat-label">Lives Saved</div>
-          </div>
-          <div class="stat-item fade-up" style="animation-delay:.2s">
-            <div class="syne stat-value">180K+</div>
-            <div class="stat-label">Active Donors</div>
-          </div>
-          <div class="stat-item fade-up" style="animation-delay:.3s">
-            <div class="syne stat-value">120+</div>
-            <div class="stat-label">Cities</div>
-          </div>
+          <div class="stat-item fade-up" style="animation-delay:.0s"><div class="syne stat-value">2,400+</div><div class="stat-label">Blood Banks</div></div>
+          <div class="stat-item fade-up" style="animation-delay:.1s"><div class="syne stat-value">50K+</div><div class="stat-label">Lives Saved</div></div>
+          <div class="stat-item fade-up" style="animation-delay:.2s"><div class="syne stat-value">180K+</div><div class="stat-label">Active Donors</div></div>
+          <div class="stat-item fade-up" style="animation-delay:.3s"><div class="syne stat-value">120+</div><div class="stat-label">Cities</div></div>
         </div>
       </section>
 
@@ -164,38 +148,27 @@
       <section class="features-section" id="features">
         <div class="features-container">
           <div class="features-header">
-            <h2 class="syne features-title">
-              Built for emergencies.<br/>
-              <span style="color:#E53935">Designed for speed.</span>
-            </h2>
+            <h2 class="syne features-title">Built for emergencies.<br/><span class="feat-title-accent">Designed for speed.</span></h2>
             <p class="features-sub">Every feature is tuned for the moments when time is everything.</p>
           </div>
           <div class="features-grid">
             <div class="card feat-card fade-up" style="animation-delay:.0s">
-              <div class="feat-icon" style="background:#FFF0F0">
-                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              </div>
+              <div class="feat-icon feat-icon-red"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
               <h3 class="syne feat-title">Real-time Alerts</h3>
               <p class="feat-desc">Instant push notifications when compatible blood becomes available within your radius.</p>
             </div>
             <div class="card feat-card fade-up" style="animation-delay:.08s">
-              <div class="feat-icon" style="background:#EEF4FF">
-                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              </div>
+              <div class="feat-icon feat-icon-blue"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
               <h3 class="syne feat-title">Proximity Matching</h3>
               <p class="feat-desc">Smart geo-location maps the closest blood banks and active donors in seconds.</p>
             </div>
             <div class="card feat-card fade-up" style="animation-delay:.16s">
-              <div class="feat-icon" style="background:#EEF9EE">
-                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
+              <div class="feat-icon feat-icon-green"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
               <h3 class="syne feat-title">AI Compatibility</h3>
               <p class="feat-desc">Intelligent type matching with automatic fallback suggestions using WHO standards.</p>
             </div>
             <div class="card feat-card fade-up" style="animation-delay:.24s">
-              <div class="feat-icon" style="background:#F5EEFF">
-                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#6A1B9A" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              </div>
+              <div class="feat-icon feat-icon-purple"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#6A1B9A" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
               <h3 class="syne feat-title">Live Inventory</h3>
               <p class="feat-desc">Up-to-the-minute blood stock tracking across all registered centres.</p>
             </div>
@@ -207,13 +180,8 @@
       <section class="dark-cta-section" id="contact">
         <div class="dark-cta-glow"></div>
         <div class="dark-cta-content">
-          <h2 class="syne dark-cta-title">
-            In emergencies,<br/>
-            <span style="color:#FF6B6B">every second counts.</span>
-          </h2>
-          <p class="dark-cta-sub">
-            Join 180,000+ donors already making a difference. One registration. Unlimited impact.
-          </p>
+          <h2 class="syne dark-cta-title">In emergencies,<br/><span class="dark-cta-accent">every second counts.</span></h2>
+          <p class="dark-cta-sub">Join 180,000+ donors already making a difference. One registration. Unlimited impact.</p>
           <button class="btn-red sos-pulse dark-cta-btn" onclick="navigate('emergency')">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
             Emergency Blood Alert
@@ -225,21 +193,27 @@
       <footer class="landing-footer">
         <div class="footer-brand">
           <svg width="22" height="27" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#E53935"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg>
-          <span class="syne footer-brand-name">BloodLink </span>
+          <span class="syne footer-brand-name">BloodLink</span>
         </div>
         <p class="footer-copy">© 2025 BloodLink Technologies @Team:BuildX · Saving lives through technology</p>
         <div class="footer-links">
-          <span>Privacy</span>
-          <span>Terms</span>
-          <span>Contact</span>
+          <span>Privacy</span><span>Terms</span><span>Contact</span>
         </div>
       </footer>
     </div>
 
-    <!-- ════════════════════════════
-         PAGE: DASHBOARD
-    ════════════════════════════ -->
+    <!-- ════ PAGE: DASHBOARD ════ -->
     <div id="page-dashboard" class="page hidden page-enter">
+      <!-- Mobile topbar -->
+      <div class="mobile-topbar glass">
+        <div class="mobile-brand">
+          <svg width="20" height="25" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#E53935"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg>
+          <span class="syne mobile-brand-name">BloodLink</span>
+        </div>
+        <button class="hamburger" id="hamburger-dashboard" aria-label="Open menu" onclick="openSidebar()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
       <div class="page-inner">
         <div class="topbar">
           <div>
@@ -247,7 +221,7 @@
             <p class="topbar-sub">Real-time inventory across Mumbai</p>
           </div>
           <div class="topbar-actions">
-            <button class="btn-red" onclick="navigate('emergency')" style="padding:9px 18px;border-radius:11px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:7px;">
+            <button class="btn-red topbar-sos-btn" onclick="navigate('emergency')">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11.767 19.089c4.924.868 6.14-6.025 1.216-6.894m-1.216 6.894L5.86 18.047m5.908 1.042-.347 1.97m1.563-8.864c4.924.869 6.14-6.025 1.215-6.893m-1.215 6.893-3.94-.694m5.155-6.2L8.29 4.26m5.908 1.042.348-1.97M7.48 20.364l3.126-17.727"/></svg>
               Emergency SOS
             </button>
@@ -256,75 +230,59 @@
             </button>
           </div>
         </div>
-
-        <!-- STAT CARDS -->
         <div class="stat-cards-grid">
           <div class="card stat-card fade-up" style="animation-delay:0s">
-            <div>
-              <div class="stat-card-label">Total Units Available</div>
-              <div class="syne stat-card-value" id="dash-total-units" style="color:#0D0D0D">—</div>
-            </div>
-            <div class="stat-card-icon" style="background:#E8F5E9">
-              <svg width="21" height="21" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#2E7D32"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg>
-            </div>
+            <div><div class="stat-card-label">Total Units Available</div><div class="syne stat-card-value" id="dash-total-units">—</div></div>
+            <div class="stat-card-icon stat-icon-green"><svg width="21" height="21" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#2E7D32"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg></div>
           </div>
           <div class="card stat-card fade-up" style="animation-delay:.07s">
-            <div>
-              <div class="stat-card-label">Critical Blood Groups</div>
-              <div class="syne stat-card-value" id="dash-crit-groups" style="color:#0D0D0D">—</div>
-            </div>
-            <div class="stat-card-icon" style="background:#FFEBEE">
-              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            </div>
+            <div><div class="stat-card-label">Critical Blood Groups</div><div class="syne stat-card-value" id="dash-crit-groups">—</div></div>
+            <div class="stat-card-icon stat-icon-red"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           </div>
           <div class="card stat-card fade-up" style="animation-delay:.14s">
-            <div>
-              <div class="stat-card-label">Active Requests</div>
-              <div class="syne stat-card-value" id="dash-active-reqs" style="color:#0D0D0D">—</div>
-            </div>
-            <div class="stat-card-icon" style="background:#E3F2FD">
-              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
+            <div><div class="stat-card-label">Active Requests</div><div class="syne stat-card-value" id="dash-active-reqs">—</div></div>
+            <div class="stat-card-icon stat-icon-blue"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
           </div>
         </div>
-
-        <!-- SEARCH BAR -->
-        <div class="card fade-up" style="border-radius:18px;padding:20px 24px;margin-bottom:22px;animation-delay:.2s">
-          <div style="display:flex;gap:12px;margin-bottom:16px">
-            <div style="flex:1;position:relative">
-              <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#BBB" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#BBBBBB" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-              <input id="dash-search" class="input-field" placeholder="Search by city or hospital..." style="padding-left:40px" oninput="filterDashboard()"/>
+        <div class="card dash-search-card fade-up" style="animation-delay:.2s">
+          <div class="dash-search-row">
+            <div class="search-input-wrap">
+              <svg class="search-input-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#BBBBBB" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input id="dash-search" class="input-field search-input-padded" placeholder="Search by city or hospital..." oninput="filterDashboard()"/>
             </div>
-            <button class="btn-red" onclick="navigate('search')" style="padding:12px 22px;border-radius:11px;font-size:14px;font-weight:600;white-space:nowrap">Search</button>
+            <button class="btn-red dash-search-btn" onclick="navigate('search')">Search</button>
           </div>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            <span style="font-size:13px;color:#AAA;margin-right:2px">Filter by group:</span>
+          <div class="dash-filter-row">
+            <span class="filter-label">Filter by group:</span>
             <div class="bg-chips" id="dash-chips"></div>
           </div>
         </div>
-
-        <!-- BLOOD BANKS GRID -->
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-          <h2 class="syne" style="font-size:20px;font-weight:700;color:#1A1A1A">Nearby Blood Banks</h2>
+        <div class="banks-header">
+          <h2 class="syne banks-title">Nearby Blood Banks</h2>
           <span class="count-badge" id="dash-count">6 found</span>
         </div>
         <div class="banks-grid" id="dash-banks-grid"></div>
       </div>
     </div>
 
-    <!-- ════════════════════════════
-         PAGE: SEARCH / FIND BLOOD
-    ════════════════════════════ -->
+    <!-- ════ PAGE: SEARCH ════ -->
     <div id="page-search" class="page hidden page-enter">
+      <!-- Mobile topbar -->
+      <div class="mobile-topbar glass">
+        <div class="mobile-brand">
+          <svg width="20" height="25" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#E53935"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg>
+          <span class="syne mobile-brand-name">BloodLink</span>
+        </div>
+        <button class="hamburger" id="hamburger-search" aria-label="Open menu" onclick="openSidebar()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
       <div class="search-layout">
-        <!-- LEFT PANEL -->
         <div class="search-left">
           <div class="search-left-header">
-            <h2 class="syne" style="font-size:21px;font-weight:800;margin-bottom:14px;color:#0D0D0D">Find Blood</h2>
-            <div style="margin-bottom:10px">
-              <div class="bg-chips" id="search-chips"></div>
-            </div>
-            <div class="compat-banner" id="search-compat-banner">
+            <h2 class="search-left-title syne">Find Blood</h2>
+            <div class="bg-chips" id="search-chips"></div>
+            <div class="compat-banner">
               💉 Compatible: <span id="search-compat-list">A+, A-, O+, O-</span>
             </div>
           </div>
@@ -332,8 +290,6 @@
             <div class="results-meta" id="search-count">Loading...</div>
           </div>
         </div>
-
-        <!-- RIGHT: MAP -->
         <div class="search-right">
           <div class="map-bg" id="mock-map">
             <svg style="position:absolute;inset:0;width:100%;height:100%">
@@ -345,25 +301,23 @@
             </svg>
             <div class="map-pins" id="map-pins"></div>
             <div class="map-legend">
-              <div style="font-weight:700;color:#333;margin-bottom:6px">📍 Mumbai</div>
+              <div class="map-legend-title">📍 Mumbai</div>
               <div class="legend-item"><span class="legend-dot" style="background:#2E7D32"></span><span>Available</span></div>
               <div class="legend-item"><span class="legend-dot" style="background:#E65100"></span><span>Low</span></div>
               <div class="legend-item"><span class="legend-dot" style="background:#E53935"></span><span>Critical</span></div>
             </div>
           </div>
-
-          <!-- Selected Bank Detail -->
           <div id="bank-detail" class="bank-detail hidden glass scale-in">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+            <div class="bank-detail-header">
               <div>
-                <h3 class="syne" id="detail-name" style="font-size:17px;font-weight:700"></h3>
-                <p id="detail-meta" style="color:#999;font-size:12.5px"></p>
+                <h3 class="syne bank-detail-name" id="detail-name"></h3>
+                <p class="bank-detail-meta" id="detail-meta"></p>
               </div>
-              <button onclick="closeBankDetail()" style="background:none;border:none;cursor:pointer">
+              <button class="detail-close-btn" onclick="closeBankDetail()">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#BBB" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
-            <div id="detail-stock" style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px"></div>
+            <div id="detail-stock" class="detail-stock"></div>
             <a id="detail-phone-link" href="#" class="detail-call-btn">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.62 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
               <span id="detail-phone-num"></span>
@@ -373,51 +327,47 @@
       </div>
     </div>
 
-    <!-- ════════════════════════════
-         PAGE: EMERGENCY SOS
-    ════════════════════════════ -->
+    <!-- ════ PAGE: EMERGENCY ════ -->
     <div id="page-emergency" class="page hidden page-enter">
+      <!-- Mobile topbar -->
+      <div class="mobile-topbar glass">
+        <div class="mobile-brand">
+          <svg width="20" height="25" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#E53935"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg>
+          <span class="syne mobile-brand-name">BloodLink</span>
+        </div>
+        <button class="hamburger" id="hamburger-emergency" aria-label="Open menu" onclick="openSidebar()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
       <div class="form-page-inner">
 
-        <!-- SUCCESS STATE -->
-        <div id="emergency-success" class="hidden" style="text-align:center;max-width:500px;width:100%">
+        <!-- SUCCESS -->
+        <div id="emergency-success" class="hidden em-success-wrap">
           <div class="success-circle pulse-anim">
             <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <h2 class="syne" style="font-size:34px;font-weight:800;color:#0D0D0D;margin-bottom:12px;letter-spacing:-0.8px">Alert Sent Successfully!</h2>
-          <p style="font-size:17px;color:#777;line-height:1.65;margin-bottom:28px">
-            We've notified <strong style="color:#E53935">47 nearby donors</strong> and
-            <strong style="color:#E53935">12 blood banks</strong> about your emergency request.
-          </p>
+          <h2 class="syne em-success-title">Alert Sent Successfully!</h2>
+          <p class="em-success-sub">We've notified <strong class="text-red">47 nearby donors</strong> and <strong class="text-red">12 blood banks</strong> about your emergency request.</p>
           <div class="success-info-box">
             <div class="success-info-row">
-              <div style="display:flex;align-items:center;gap:10px">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <span>Donors notified</span>
-              </div>
-              <span class="syne" style="font-weight:700;color:#1A1A1A;font-size:16px">47</span>
+              <div class="success-info-left"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Donors notified</span></div>
+              <span class="syne success-info-val">47</span>
             </div>
             <div class="success-info-row">
-              <div style="display:flex;align-items:center;gap:10px">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                <span>Blood banks alerted</span>
-              </div>
-              <span class="syne" style="font-weight:700;color:#1A1A1A;font-size:16px">12</span>
+              <div class="success-info-left"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Blood banks alerted</span></div>
+              <span class="syne success-info-val">12</span>
             </div>
-            <div class="success-info-row" style="border-bottom:none">
-              <div style="display:flex;align-items:center;gap:10px">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>Est. response time</span>
-              </div>
-              <span class="syne" style="font-weight:700;color:#1A1A1A;font-size:16px">&lt; 15 min</span>
+            <div class="success-info-row no-border">
+              <div class="success-info-left"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Est. response time</span></div>
+              <span class="syne success-info-val">&lt; 15 min</span>
             </div>
           </div>
-          <button class="btn-ghost" onclick="resetEmergency()" style="padding:13px 28px;border-radius:12px;font-size:14px;font-weight:600">Send Another Alert</button>
+          <button class="btn-ghost em-reset-btn" onclick="resetEmergency()">Send Another Alert</button>
         </div>
 
-        <!-- FORM STATE -->
-        <div id="emergency-form-wrap" style="max-width:620px;width:100%">
-          <div style="text-align:center;margin-bottom:44px">
+        <!-- FORM -->
+        <div id="emergency-form-wrap" class="em-form-wrap">
+          <div class="em-form-header">
             <div class="sos-icon-wrap">
               <div class="sos-ripple"></div>
               <div class="sos-ripple-2"></div>
@@ -425,112 +375,108 @@
                 <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
               </div>
             </div>
-            <h1 class="syne" style="font-size:36px;font-weight:800;color:#0D0D0D;letter-spacing:-0.8px;margin-bottom:10px">Emergency Blood Alert</h1>
-            <p style="font-size:16.5px;color:#777;line-height:1.65">Fill this form and we'll instantly notify all nearby donors and blood banks.</p>
+            <h1 class="syne em-form-title">Emergency Blood Alert</h1>
+            <p class="em-form-sub">Fill this form and we'll instantly notify all nearby donors and blood banks.</p>
           </div>
 
-          <div class="card fade-up" style="border-radius:22px;padding:36px;animation-delay:.15s">
-            <div style="display:grid;gap:18px">
+          <div class="card em-form-card fade-up" style="animation-delay:.15s">
+            <div class="form-grid">
               <div>
                 <label class="form-label">Patient Name</label>
                 <input id="em-name" class="input-field" placeholder="Full name of patient"/>
               </div>
               <div>
-                <label class="form-label">Blood Group Required <span style="color:#E53935">*</span></label>
-                <div class="bg-chips" id="em-chips" style="gap:8px"></div>
+                <label class="form-label">Blood Group Required <span class="required-star">*</span></label>
+                <div class="bg-chips" id="em-chips"></div>
               </div>
               <div>
-                <label class="form-label">Location / Hospital <span style="color:#E53935">*</span></label>
-                <div style="position:relative">
-                  <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%)" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#BBBBBB" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  <input id="em-loc" class="input-field" placeholder="Hospital name or area" style="padding-left:40px"/>
+                <label class="form-label">Location / Hospital <span class="required-star">*</span></label>
+                <div class="input-icon-wrap">
+                  <svg class="input-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#BBBBBB" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <input id="em-loc" class="input-field input-icon-padded" placeholder="Hospital name or area"/>
                 </div>
               </div>
               <div>
                 <label class="form-label">Contact Number</label>
-                <div style="position:relative">
-                  <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%)" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#BBBBBB" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.62 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                  <input id="em-contact" class="input-field" placeholder="+91 XXXXX XXXXX" style="padding-left:40px"/>
+                <div class="input-icon-wrap">
+                  <svg class="input-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#BBBBBB" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.62 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <input id="em-contact" class="input-field input-icon-padded" placeholder="+91 XXXXX XXXXX"/>
                 </div>
               </div>
               <div>
                 <label class="form-label">Urgency Level</label>
-                <div style="display:flex;gap:10px">
+                <div class="urgency-row">
                   <button class="urgency-btn active" data-urgency="Critical" onclick="setUrgency(this)" style="--uc:#E53935;--ubg:#FFF0F0">Critical</button>
                   <button class="urgency-btn" data-urgency="High" onclick="setUrgency(this)" style="--uc:#E65100;--ubg:#FFF3E0">High</button>
                   <button class="urgency-btn" data-urgency="Medium" onclick="setUrgency(this)" style="--uc:#2E7D32;--ubg:#F0F8EE">Medium</button>
                 </div>
               </div>
             </div>
-
-            <button id="em-submit-btn" class="em-submit-btn" onclick="submitEmergency()" style="margin-top:28px">
+            <button id="em-submit-btn" class="em-submit-btn" onclick="submitEmergency()">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
               Send Emergency Alert
             </button>
-            <p id="em-hint" style="text-align:center;font-size:12.5px;color:#CCC;margin-top:10px">Select blood group and enter location to continue</p>
+            <p id="em-hint" class="em-hint">Select blood group and enter location to continue</p>
           </div>
 
-          <!-- Recent Requests -->
-          <div style="margin-top:32px">
-            <h3 class="syne" style="font-size:18px;font-weight:700;color:#1A1A1A;margin-bottom:14px">Recent Requests</h3>
+          <div class="recent-section">
+            <h3 class="syne recent-title">Recent Requests</h3>
             <div id="recent-requests"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ════════════════════════════
-         PAGE: DONATE
-    ════════════════════════════ -->
+    <!-- ════ PAGE: DONATE ════ -->
     <div id="page-donate" class="page hidden page-enter">
+      <!-- Mobile topbar -->
+      <div class="mobile-topbar glass">
+        <div class="mobile-brand">
+          <svg width="20" height="25" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#E53935"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg>
+          <span class="syne mobile-brand-name">BloodLink</span>
+        </div>
+        <button class="hamburger" id="hamburger-donate" aria-label="Open menu" onclick="openSidebar()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
       <div class="form-page-inner">
 
-        <!-- SUCCESS STATE -->
-        <div id="donate-success" class="hidden" style="text-align:center;max-width:480px;width:100%">
-          <div style="font-size:64px;margin-bottom:20px;animation:float 3s ease-in-out infinite">❤️</div>
-          <h2 class="syne" style="font-size:33px;font-weight:800;letter-spacing:-0.8px;margin-bottom:10px">You're a Hero!</h2>
-          <p style="font-size:16.5px;color:#777;line-height:1.65;margin-bottom:28px">
-            Welcome to BloodLink, <strong id="donor-success-name"></strong>! Your <strong id="donor-success-bg"></strong> blood type is registered.
-          </p>
+        <!-- SUCCESS -->
+        <div id="donate-success" class="hidden donate-success-wrap">
+          <div class="donate-heart-icon">❤️</div>
+          <h2 class="syne donate-success-title">You're a Hero!</h2>
+          <p class="donate-success-sub">Welcome to BloodLink, <strong id="donor-success-name"></strong>! Your <strong id="donor-success-bg"></strong> blood type is registered.</p>
           <div class="donor-id-box">
-            <div style="font-size:12.5px;color:#E53935;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Your Donor ID</div>
+            <div class="donor-id-label">Your Donor ID</div>
             <div class="syne donor-id-num" id="donor-id-display"></div>
           </div>
-          <div class="card" style="border-radius:16px;padding:16px 20px;margin-bottom:20px;text-align:left">
-            <div class="success-info-row" id="donor-avail-row">
-              <span style="color:#999">Availability</span><span style="font-weight:600;color:#1A1A1A" id="donor-avail-val">Active</span>
-            </div>
-            <div class="success-info-row" id="donor-bg-row">
-              <span style="color:#999">Blood Group</span><span style="font-weight:600;color:#1A1A1A" id="donor-bg-val"></span>
-            </div>
-            <div class="success-info-row" style="border-bottom:none">
-              <span style="color:#999">Location</span><span style="font-weight:600;color:#1A1A1A" id="donor-loc-val">Not set</span>
-            </div>
+          <div class="card donate-info-card">
+            <div class="success-info-row"><span class="info-label">Availability</span><span class="info-val" id="donor-avail-val">Active</span></div>
+            <div class="success-info-row"><span class="info-label">Blood Group</span><span class="info-val" id="donor-bg-val"></span></div>
+            <div class="success-info-row no-border"><span class="info-label">Location</span><span class="info-val" id="donor-loc-val">Not set</span></div>
           </div>
-          <button class="btn-ghost" onclick="resetDonate()" style="padding:12px 28px;border-radius:11px;font-size:14px;font-weight:600">Register Another</button>
+          <button class="btn-ghost donate-reset-btn" onclick="resetDonate()">Register Another</button>
         </div>
 
-        <!-- FORM STATE -->
-        <div id="donate-form-wrap" style="max-width:580px;width:100%">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px">
-            <div style="width:58px;height:58px;border-radius:17px;flex-shrink:0;background:linear-gradient(135deg,#FFCDD2,#EF9A9A);display:flex;align-items:center;justify-content:center">
+        <!-- FORM -->
+        <div id="donate-form-wrap" class="donate-form-wrap">
+          <div class="donate-form-header">
+            <div class="donate-icon-wrap">
               <svg width="27" height="27" viewBox="0 0 24 24" fill="#E53935" stroke="#E53935" stroke-width="1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             </div>
             <div>
-              <h1 class="syne" style="font-size:30px;font-weight:800;letter-spacing:-0.7px;color:#0D0D0D">Become a Donor</h1>
-              <p style="color:#AAA;font-size:14.5px;margin-top:2px">Register and help save lives in your community</p>
+              <h1 class="syne donate-form-title">Become a Donor</h1>
+              <p class="donate-form-sub">Register and help save lives in your community</p>
             </div>
           </div>
 
-          <div class="info-banner" style="margin-bottom:24px">
-            ❤️ Every donor can save up to 3 lives. One donation every 3 months is all it takes.
-          </div>
+          <div class="info-banner">❤️ Every donor can save up to 3 lives. One donation every 3 months is all it takes.</div>
 
-          <div class="card fade-up" style="border-radius:22px;padding:34px;animation-delay:.1s">
-            <div style="display:grid;gap:18px">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="card donate-card fade-up" style="animation-delay:.1s">
+            <div class="form-grid">
+              <div class="form-two-col">
                 <div>
-                  <label class="form-label">Full Name <span style="color:#E53935">*</span></label>
+                  <label class="form-label">Full Name <span class="required-star">*</span></label>
                   <input id="don-name" class="input-field" placeholder="Your name"/>
                 </div>
                 <div>
@@ -539,14 +485,14 @@
                 </div>
               </div>
               <div>
-                <label class="form-label">Blood Group <span style="color:#E53935">*</span></label>
-                <div class="bg-chips" id="don-chips" style="gap:7px"></div>
+                <label class="form-label">Blood Group <span class="required-star">*</span></label>
+                <div class="bg-chips" id="don-chips"></div>
               </div>
               <div>
                 <label class="form-label">Location</label>
-                <div style="position:relative">
-                  <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%)" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#BBBBBB" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  <input id="don-loc" class="input-field" placeholder="City / Area" style="padding-left:40px"/>
+                <div class="input-icon-wrap">
+                  <svg class="input-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#BBBBBB" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <input id="don-loc" class="input-field input-icon-padded" placeholder="City / Area"/>
                 </div>
               </div>
               <div>
@@ -555,16 +501,15 @@
               </div>
               <div class="toggle-row">
                 <div>
-                  <div style="font-weight:600;font-size:14.5px;color:#1A1A1A;margin-bottom:2px">Available to Donate</div>
-                  <div style="font-size:12.5px;color:#AAA">We'll send alerts when your blood is needed nearby</div>
+                  <div class="toggle-label">Available to Donate</div>
+                  <div class="toggle-sublabel">We'll send alerts when your blood is needed nearby</div>
                 </div>
                 <div id="don-toggle" class="toggle-track active" onclick="toggleAvail()">
                   <div class="toggle-thumb"></div>
                 </div>
               </div>
             </div>
-
-            <button id="don-submit-btn" class="btn-red" onclick="submitDonate()" style="width:100%;margin-top:26px;padding:16px;border-radius:14px;font-size:15.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:9px">
+            <button id="don-submit-btn" class="btn-red don-submit-btn" onclick="submitDonate()">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
               Register as Donor
             </button>
@@ -573,109 +518,78 @@
       </div>
     </div>
 
-    <!-- ════════════════════════════
-         PAGE: ADMIN
-    ════════════════════════════ -->
+    <!-- ════ PAGE: ADMIN ════ -->
     <div id="page-admin" class="page hidden page-enter">
+      <!-- Mobile topbar -->
+      <div class="mobile-topbar glass">
+        <div class="mobile-brand">
+          <svg width="20" height="25" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#E53935"/><ellipse cx="23" cy="38" rx="5" ry="8" fill="white" opacity="0.28"/></svg>
+          <span class="syne mobile-brand-name">BloodLink</span>
+        </div>
+        <button class="hamburger" id="hamburger-admin" aria-label="Open menu" onclick="openSidebar()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
       <div class="page-inner">
         <div class="topbar">
           <div>
             <h1 class="syne topbar-title">Admin Panel</h1>
-            <p class="topbar-sub">BloodLink  Control Centre</p>
+            <p class="topbar-sub">BloodLink Control Centre</p>
           </div>
-          <div>
-            <div class="system-badge">
-              <span class="dot dot-green"></span>
-              All Systems Operational
-            </div>
+          <div class="system-badge">
+            <span class="dot dot-green"></span>
+            All Systems Operational
           </div>
         </div>
 
-        <!-- TABS -->
         <div class="admin-tabs">
           <button class="admin-tab active" data-tab="overview" onclick="switchAdminTab(this)">Overview</button>
           <button class="admin-tab" data-tab="inventory" onclick="switchAdminTab(this)">Inventory</button>
           <button class="admin-tab" data-tab="requests" onclick="switchAdminTab(this)">Requests</button>
         </div>
 
-        <!-- OVERVIEW TAB -->
         <div id="admin-overview" class="admin-tab-content">
           <div class="admin-stat-grid">
-            <div class="card fade-up" style="border-radius:16px;padding:18px 20px;animation-delay:0s">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start">
-                <div>
-                  <div style="font-size:12px;color:#AAA;margin-bottom:6px">Total Units</div>
-                  <div class="syne admin-stat-val" id="admin-total" style="color:#2E7D32">—</div>
-                </div>
-                <div class="stat-card-icon" style="background:#E8F5E9;width:38px;height:38px;border-radius:11px">
-                  <svg width="18" height="18" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#2E7D32"/></svg>
-                </div>
-              </div>
+            <div class="card admin-stat-card fade-up" style="animation-delay:0s">
+              <div><div class="admin-stat-label">Total Units</div><div class="syne admin-stat-val admin-val-green" id="admin-total">—</div></div>
+              <div class="stat-card-icon stat-icon-green admin-stat-icon"><svg width="18" height="18" viewBox="0 0 60 74" fill="none"><path d="M30 4C30 4 6 30 6 46C6 59.2 16.8 70 30 70C43.2 70 54 59.2 54 46C54 30 30 4 30 4Z" fill="#2E7D32"/></svg></div>
             </div>
-            <div class="card fade-up" style="border-radius:16px;padding:18px 20px;animation-delay:.07s">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start">
-                <div>
-                  <div style="font-size:12px;color:#AAA;margin-bottom:6px">Active Alerts</div>
-                  <div class="syne admin-stat-val" id="admin-alerts" style="color:#E53935">—</div>
-                </div>
-                <div class="stat-card-icon" style="background:#FFEBEE;width:38px;height:38px;border-radius:11px">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                </div>
-              </div>
+            <div class="card admin-stat-card fade-up" style="animation-delay:.07s">
+              <div><div class="admin-stat-label">Active Alerts</div><div class="syne admin-stat-val admin-val-red" id="admin-alerts">—</div></div>
+              <div class="stat-card-icon stat-icon-red admin-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
             </div>
-            <div class="card fade-up" style="border-radius:16px;padding:18px 20px;animation-delay:.14s">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start">
-                <div>
-                  <div style="font-size:12px;color:#AAA;margin-bottom:6px">Blood Banks</div>
-                  <div class="syne admin-stat-val" style="color:#1565C0">6</div>
-                </div>
-                <div class="stat-card-icon" style="background:#E3F2FD;width:38px;height:38px;border-radius:11px">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                </div>
-              </div>
+            <div class="card admin-stat-card fade-up" style="animation-delay:.14s">
+              <div><div class="admin-stat-label">Blood Banks</div><div class="syne admin-stat-val admin-val-blue">6</div></div>
+              <div class="stat-card-icon stat-icon-blue admin-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
             </div>
-            <div class="card fade-up" style="border-radius:16px;padding:18px 20px;animation-delay:.21s">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start">
-                <div>
-                  <div style="font-size:12px;color:#AAA;margin-bottom:6px">Donors Active</div>
-                  <div class="syne admin-stat-val" style="color:#6A1B9A">182</div>
-                </div>
-                <div class="stat-card-icon" style="background:#F3E5F5;width:38px;height:38px;border-radius:11px">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6A1B9A" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                </div>
-              </div>
+            <div class="card admin-stat-card fade-up" style="animation-delay:.21s">
+              <div><div class="admin-stat-label">Donors Active</div><div class="syne admin-stat-val admin-val-purple">182</div></div>
+              <div class="stat-card-icon stat-icon-purple admin-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6A1B9A" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
             </div>
           </div>
-
-          <!-- CHART -->
-          <div class="card fade-up" style="border-radius:20px;padding:24px 28px;animation-delay:.25s">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
-              <h3 class="syne" style="font-size:18px;font-weight:700;color:#1A1A1A">Blood Stock Overview</h3>
-              <span style="font-size:12px;color:#AAA">All 6 banks · total units</span>
+          <div class="card admin-chart-card fade-up" style="animation-delay:.25s">
+            <div class="admin-chart-header">
+              <h3 class="syne admin-chart-title">Blood Stock Overview</h3>
+              <span class="admin-chart-sub">All 6 banks · total units</span>
             </div>
             <div class="chart-bars" id="admin-chart"></div>
           </div>
         </div>
 
-        <!-- INVENTORY TAB -->
         <div id="admin-inventory" class="admin-tab-content hidden">
-          <div class="card fade-in" style="border-radius:20px;overflow:hidden">
-            <div style="padding:18px 24px;border-bottom:1px solid #F5F5F5;display:flex;justify-content:space-between;align-items:center">
-              <h3 class="syne" style="font-size:17px;font-weight:700;color:#1A1A1A">Blood Bank Inventory</h3>
-              <span style="font-size:12px;color:#AAA">Last synced: 2 min ago</span>
+          <div class="card admin-list-card">
+            <div class="admin-list-header">
+              <h3 class="syne admin-list-title">Blood Bank Inventory</h3>
+              <span class="admin-list-sub">Last synced: 2 min ago</span>
             </div>
             <div id="admin-inventory-list"></div>
           </div>
         </div>
 
-        <!-- REQUESTS TAB -->
         <div id="admin-requests" class="admin-tab-content hidden">
-          <div class="card fade-in" style="border-radius:20px;overflow:hidden">
-            <div style="padding:18px 24px;border-bottom:1px solid #F5F5F5">
-              <h3 class="syne" style="font-size:17px;font-weight:700;color:#1A1A1A">
-                Emergency Requests
-                <span class="active-badge" id="admin-active-badge">3 active</span>
-              </h3>
+          <div class="card admin-list-card">
+            <div class="admin-list-header">
+              <h3 class="syne admin-list-title">Emergency Requests <span class="active-badge" id="admin-active-badge">3 active</span></h3>
             </div>
             <div id="admin-requests-list"></div>
           </div>
@@ -683,10 +597,9 @@
       </div>
     </div>
 
-  </main><!-- end #main-content -->
-</div><!-- end #app -->
+  </main>
+</div>
 
-<!-- TOAST -->
 <div id="toast" class="toast"></div>
 
 <script src="script.js"></script>
