@@ -66,9 +66,8 @@ Bloodlink solves this by providing:
 ---
 
 ## 👥 Team
-
-- Yash Yadav  
 - Samarth Talwar  
+- Yash Yadav  
 - Sanika Lagdive  
 - Vaishnavi Chitte  
 - Sandhya Havinal  
